@@ -2,10 +2,15 @@ import React from "react";
 
 const AddName = props => {
   return (
-    <div>
-      <input type="text" placeholder="enter name here..." />
-      <button onClick={props.addName}>Add name</button>
-    </div>
+    <form onSubmit={props.onSubmit}>
+      <input
+        type="text"
+        placeholder="enter name here..."
+        value={props.value}
+        onChange={props.handleChange}
+      />
+      <input type="submit" value="Add name" />
+    </form>
   );
 };
 

@@ -10,7 +10,8 @@ class App extends Component {
     super();
     this.state = {
       names: ["gordon", "sahil", "david", "sally", "jane", "alice"],
-      luckyWinnerIndex: null
+      luckyWinnerIndex: null,
+      value: ""
     };
   }
 
@@ -18,7 +19,10 @@ class App extends Component {
     return (
       <div>
         <Title />
-        <AddName addName={() => this.addName()} />
+        <AddName 
+          onSubmit={event => this.handleSubmit(event)}
+          value={this.state.value}
+          handleChange={event => this.handleChange(event)} />
 
         <hr />
         <RandomButton handleClick={() => this.handleClick()} />
@@ -33,14 +37,17 @@ class App extends Component {
     );
   }
 
-  addName() {
-    const newName = document.querySelector("input").value;
-    this.setState({ names: [...this.state.names, newName] });
+  handleChange(event) { // for keystrokes in input box
+    this.setState({ value: event.target.value });
   }
-  handleClick() {
+  handleClick() { // to get random winner by clicking "get lucky winner" button
     const randNumber = math.randomInt(this.state.names.length);
-
     this.setState({ luckyWinnerIndex: randNumber });
+  }
+  handleSubmit(event) {
+    this.setState({ names: [...this.state.names, this.state.value] });
+    this.setState({value: ""});
+    event.preventDefault(); // without this name cannot be added
   }
 }
 
